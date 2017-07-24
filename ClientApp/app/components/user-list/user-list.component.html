@@ -1,0 +1,59 @@
+﻿<div class="alert alert-success" [hidden]="!showSuccessMessage">
+    <strong>Success!</strong> Data saved!
+</div>
+
+<div class="alert alert-danger" [hidden]="!showErrorMessage">
+    <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+</div>
+
+<div id="userListBlock" [hidden]="hideUserList">
+    <h2>User List</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of userList" (click)="getUserDetails(user.idUser)" role="button">
+                <td>{{ user.idUser }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-default" (click)="addUser()">Add New User</button>
+</div>
+
+<div id="userListBlock" [hidden]="hideUserDetail">
+    <h2>User Detail</h2>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="userName" *ngIf="userDetail" [(ngModel)]="userDetail.name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="alterEgo">Email</label>
+            <input type="text" class="form-control" name="userEmail" *ngIf="userDetail" [(ngModel)]="userDetail.email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Password</label>
+            <input type="text" class="form-control" name="userPassword" *ngIf="userDetail" [(ngModel)]="userDetail.password" required>
+        </div>
+
+        <div class="form-group" *ngIf="userDetail && userDetail.createdDate">
+            <label for="name">Date</label>
+            <input type="text" readonly class="form-control" name="userCreatedDate" value="{{userDetail?.createdDate | date: 'dd/MM/yyyy HH:mm'}}">
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-default" (click)="cancelEdit()">Cancel</button>
+
+    </form>
+
+</div>
